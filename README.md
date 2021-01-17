@@ -20,8 +20,12 @@ npm run build --report
 ## 创建webpack项目
 
 ``` bash
-# install dependencies
-npm install
+# 安装依赖vue-router、element-ui、sass-loader、node-sass
+cd vue-element
+npm install vue-router --save-dev
+npm i element-ui -S
+npm install sass-loader node-sass --save-dev
+npm install axios vue-axios --save
 
 ```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
