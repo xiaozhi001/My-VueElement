@@ -27,5 +27,16 @@ npm i element-ui -S
 npm install sass-loader node-sass --save-dev
 npm install axios vue-axios --save
 
+# 在项目中使用element-ui模块
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
+
+## Element组件
+# Layout布局
+1.先行后列（一行24列）
+# Container容器
+
+
 ```
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
