@@ -42,8 +42,29 @@ Vue.use(ElementUI)
 # Layout布局
 1.先行后列（一行24列）
 # Container容器
+```
+## 开发流程
 
+```bash
+# 创建组件
 
+# 配置路由
+```
+## 路由导航守卫》控制访问权限
+
+```bash
+# 为路由对象，添加beforeEach 导航守卫
+router.beforeEach((to, from, next)=>{
+  if (to.path === '/login') return next()
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login')
+  next()
+})
+# 退出功能实现原理
+1.清空token
+window.sessionStorage.clear()
+2.跳转到登录页
+this.$router.push('/login')
 ```
 
 

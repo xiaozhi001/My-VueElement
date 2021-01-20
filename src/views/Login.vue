@@ -1,126 +1,104 @@
 <template>
-  <div id='login'>
-    <el-row :gutter='20'>
-        <!-- gutter 栅格间距 -->
-        <el-col :span='16' :offset='4'>
-          <!-- span 栅格占的列数，offset是偏移列数 -->
-          <div class="grid-content bg-purple"></div>
-        </el-col>
-    </el-row>
-
-    <el-row :gutter='20'>
-      <el-col :span='16' :offset='4'>
-        <el-container style="height: 500px; border: 1px solid #eee">
-          <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-            <el-menu :default-openeds="['1', '3']">
-              <el-submenu index="1">
-                <template slot="title"><i class="el-icon-message"></i>导航一</template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="1-1">选项1</el-menu-item>
-                  <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-              <el-submenu index="2">
-                <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="2-1">选项1</el-menu-item>
-                  <el-menu-item index="2-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="2-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="2-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-              <el-submenu index="3">
-                <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-                <el-menu-item-group>
-                  <template slot="title">分组一</template>
-                  <el-menu-item index="3-1">选项1</el-menu-item>
-                  <el-menu-item index="3-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                  <el-menu-item index="3-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="3-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-                </el-submenu>
-              </el-submenu>
-            </el-menu>
-          </el-aside>
-          
-          <el-container>
-            <el-header style="text-align: right; font-size: 12px">
-              <el-dropdown>
-                <i class="el-icon-setting" style="margin-right: 15px"></i>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>查看</el-dropdown-item>
-                  <el-dropdown-item>新增</el-dropdown-item>
-                  <el-dropdown-item>删除</el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-              <span>王小虎</span>
-            </el-header>
-            
-            <el-main>
-              <el-table :data="tableData">
-                <el-table-column prop="date" label="日期" width="140">
-                </el-table-column>
-                <el-table-column prop="name" label="姓名" width="120">
-                </el-table-column>
-                <el-table-column prop="address" label="地址">
-                </el-table-column>
-              </el-table>
-            </el-main>
-          </el-container>
-        </el-container>     
-      </el-col>
-    </el-row>    
+  <div class="login_container">
+    <div class="login_box">
+      <!-- Logo区域 -->
+      <div class='avatae_box'>
+        <!-- <img src="../assets/css/global.css" alt=""> -->
+      </div>
+      <!-- 登录表单区域 -->
+      <el-form ref='loginFormRef' :model='loginForm' :rules='loginFormRules' label-width="0px" class="login_form">
+        <!-- 用户名 -->
+        <el-form-item prop='username'>
+          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-yonghumingmima"></el-input>
+        </el-form-item>
+        <!-- 密码 -->
+        <el-form-item prop='password'>
+          <el-input v-model="loginForm.password" type='password' prefix-icon="iconfont icon-yonghuming-mima"></el-input>
+        </el-form-item>
+        <!-- 按钮区域 -->
+        <el-form-item class="btns">
+          <el-button type="primary" @click='login'>登录</el-button>
+          <el-button type="info" @click="resetLoginForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Login',
-  data(){
-    const item = {
-      date: '2016-05-02',
-      name: 'xiaozhi',
-      address: '上海市普陀区金沙江路1518弄'
-    };
+  data() {
     return {
-      tableData: Array(20).fill(item)
+      // 这是登录表单的数据绑定对象
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      // 登录表单验证规则对象
+      loginFormRules: {
+        // 验证用户名是否合法
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur'},
+          {min: 3, max: 10, message: '长度在3到10个字符', trigger: 'blur'}
+        ],
+        // 验证密码是否合法
+        password: [
+          { required: true, message: '请输入登录密码', trigger: 'blur'},
+          {min: 3, max: 10, message: '长度在3到10个字符', trigger: 'blur'}
+        ]
+      }
+    }
+  },
+  methods: {
+    // 点击重置按钮，重置登录表单
+    resetLoginForm() {
+      console.log(this);
+      this.$refs.loginFormRef.resetFields();
+    },
+    // 表单域验证
+    login() {
+      this.$refs.loginFormRef.validate((valid)=> {
+        if(!valid) return;
+        // const {data: res} = this.$http.post('login', this.loginForm);
+        // if(res.meta.status !==200) return console.log('登录失败');
+        // console.log('登录成功');
+        this.$message('登录成功');
+        // 1.将登录成功之后的token，保存到客户端的sessionStorage中
+        // 1.1项目中除了登录之外的API接口，必须在登录之后才能访问
+        // 1.2token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
+        // window.sessionStorage.setItem('token', res.data.token)
+        // 2.通过编程式导航跳转到后台主页，路由地址是/home
+        this.$router.push('/home')
+      })
     }
   }
-  
 }
 </script>
 <style scoped>
-  .bg-purple {
-    background: #f7f8fa;
+  .login_container {
+    background-color: #2b4b6b;
+    height: 100%;
   }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+  .login_box {
+    width: 450px;
+    height: 300px;
+    background-color: white;
+    border-radius: 3px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
+  .btns {
+    display: flex;
+    justify-content: flex-end;
   }
-  .el-aside {
-    color: #333;
+  .login_form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
   }
 </style>
