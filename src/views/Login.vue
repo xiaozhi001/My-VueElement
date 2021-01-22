@@ -62,7 +62,6 @@ export default {
       this.$refs.loginFormRef.validate(async valid=> {
         if(!valid) return;
         const res = await login(this.loginForm);
-        console.log(res);
         // const {data: res} = await this.$http.post('login', this.loginForm);
         if(res.data.meta.status ==400)  return this.$message('用户不存在');
         this.$message('登录成功');
