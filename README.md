@@ -65,6 +65,22 @@ router.beforeEach((to, from, next)=>{
 window.sessionStorage.clear()
 2.跳转到登录页
 this.$router.push('/login')
+
+#配置axios发起登录请求
+1.如果某个方法的返回结果是promise，我们可以用await（只能用在被async修饰的方法中）
+```
+## 主页面设计
+
+```bash
+# 通过接口获取菜单数据
+1.通过axios请求拦截器添加token，保证拥有获取数据的权限
+//axios请求拦截(预处理请求！)
+axios.interceptors.request.use(config => {
+  //为请求对象，添加Token验证的Authorization字段
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
+
 ```
 
 

@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import {login} from '@/network/login'
 export default {
   name: 'Login',
   data() {
@@ -58,16 +59,17 @@ export default {
     },
     // 表单域验证
     login() {
-      this.$refs.loginFormRef.validate((valid)=> {
+      this.$refs.loginFormRef.validate(async valid=> {
         if(!valid) return;
-        // const {data: res} = this.$http.post('login', this.loginForm);
-        // if(res.meta.status !==200) return console.log('登录失败');
-        // console.log('登录成功');
+        const res = await login(this.loginForm);
+        console.log(res);
+        // const {data: res} = await this.$http.post('login', this.loginForm);
+        if(res.data.meta.status ==400)  return this.$message('用户不存在');
         this.$message('登录成功');
         // 1.将登录成功之后的token，保存到客户端的sessionStorage中
         // 1.1项目中除了登录之外的API接口，必须在登录之后才能访问
         // 1.2token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
-        // window.sessionStorage.setItem('token', res.data.token)
+        window.sessionStorage.setItem('token', res.data.token)
         // 2.通过编程式导航跳转到后台主页，路由地址是/home
         this.$router.push('/home')
       })
