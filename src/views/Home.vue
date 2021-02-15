@@ -55,13 +55,20 @@
 </template>
 
 <script>
+import {getMenus} from '@/network/menus'
 export default {
   name: 'Home',
   data() {
     return {
-      isCollapse: true
+      isCollapse: true,
+      // 左侧菜单数据
+      menulist: []
     }
   },
+  created() {
+   this.getMenuList()
+  }, 
+
   methods: {
     logout(){
       window.sessionStorage.clear();
@@ -78,6 +85,13 @@ export default {
     collapseClose() {
       // if (this.collapseBtnClick) return;
       this.isCollapse = true;
+    },
+    // 获取所有菜单
+    async getMenuList() {
+      const { data: res} = await getMenus();
+      if(res.meta.status !== 200) return this.$message.error(res.meta.msg);
+      this.menulist = res.data;
+      console.log(this.menulist);
     }
   }
 }
