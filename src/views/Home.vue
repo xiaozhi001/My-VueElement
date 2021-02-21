@@ -32,17 +32,22 @@
         :collapse="isCollapse"
         background-color="#333744"
         text-color="#fff"
-        active-text-color="#ffd04b">
-        <div></div>
-        <el-submenu index="1">
+        active-text-color="#409EFF">
+        <!-- 一级菜单 -->
+        <el-submenu :index="item.id + ''" v-for="item in menulist" :key='item.id'>
           <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
+            <!-- 图标 -->
+            <i :class="iconsObj[item.id]"></i>
+            <!-- 内容 -->
+            <span>{{item.authName}}</span>
           </template>
-          <el-menu-item index="1-1">
+          <!-- 二级菜单 -->
+          <el-menu-item :index="subItem.id + ''" v-for="subItem in item.children" :key="subItem.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>导航一</span>
+              <!-- 图标 -->
+              <i class="el-icon-menu"></i>
+              <!-- 内容 -->
+              <span>{{subItem.authName}}</span>
           </template>
           </el-menu-item>
         </el-submenu>
@@ -61,8 +66,16 @@ export default {
   data() {
     return {
       isCollapse: true,
+       
       // 左侧菜单数据
-      menulist: []
+      menulist: [],
+      iconsObj: {
+        '125': 'iconfont icon-yonghu',
+        '103': 'iconfont icon-quanxian',
+        '101': 'iconfont icon-shangpin',
+        '102': 'iconfont icon-dingdan',
+        '145': 'iconfont icon-shuju'
+      }
     }
   },
   created() {
@@ -127,5 +140,8 @@ export default {
     height: 50px;
     width: 55px;
     margin-right: 20px;
+  }
+  .iconfont {
+    margin-right: 10px;
   }
 </style>
