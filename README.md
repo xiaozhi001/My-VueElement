@@ -81,6 +81,9 @@ axios.interceptors.request.use(config => {
   return config
 })
 
+#实现首页路由的重定向效果
+VUE定义组件 》router定义路由规则 》<router-view>放置路由占位符
+
 ```
 
 

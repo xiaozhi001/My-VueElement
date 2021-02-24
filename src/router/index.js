@@ -6,6 +6,8 @@ const Login = () =>
     import ('views/Login')
 const Home = () =>
     import ('views/Home')
+const Welcome = () =>
+    import ('views/Welcome')
 
 // 1.安装插件
 Vue.use(VueRouter)
@@ -20,7 +22,14 @@ const routes = [{
     },
     {
         path: '/home',
-        component: Home
+        component: Home,
+        redirect: '/welcome',
+        children: [
+          {
+            path: '/welcome',
+            component: Welcome
+          }
+        ]
     }
 ]
 
